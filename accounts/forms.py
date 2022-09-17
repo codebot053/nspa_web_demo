@@ -1,8 +1,10 @@
+from django import forms
+from django.contrib.auth.forms import UserCreationForm    
 from .models import User
-from django import forms    
 
 
-class SignupForm(forms.ModelForm):
-    class Meta: 
+class SignupForm(UserCreationForm):
+    #기존 UserCreationForm 의 Meta를 overwrite 해 버리기에 Meta도 상속받는다.
+    class Meta(UserCreationForm.Meta): 
         model = User
-        fields = ['username', 'password', 'email']   
+        fields = ['username','first_name','last_name', 'email']   
