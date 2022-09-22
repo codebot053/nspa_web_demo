@@ -29,6 +29,10 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+ADMINS = [
+    ('Jihoon Park', 'codebot053@gmail.com'),
+]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -151,3 +155,4 @@ EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
 EMAIL_PORT = 587
 EMAIL_USE_TLS =True
 
+WELCOME_EMAIL_SENDER = "codebot053@gmail.com"

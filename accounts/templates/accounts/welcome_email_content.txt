@@ -1,0 +1,7 @@
+DEV_TOYBOX 가입을 환영합니다.
+
+{{ user.first_name }}님 회원가입을 환영합니다. 
+DEV_TOYBOX에는 다양한 사람들과 개발팀이 활동하고 있습니다.
+저희와 함께 멋진 프로젝트 경험을 해보시고 {{ user.first_name }}님 의 멋진 아이디어를 다른 사람들과 함께 실제 서비스로 만들어보세요!
+
+- DEV_TOYBOX JIHOON -
