@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth.views import LoginView, LogoutView
 from .forms import SignupForm
+
+login = LoginView.as_view(template_name="accounts/login_form.html")
+logout = LogoutView.as_view()
 
 def signup(request):
 
