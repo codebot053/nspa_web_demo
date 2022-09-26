@@ -148,7 +148,8 @@ INTERNAL_IPS = [
 ]
 
 # Email and Send Gird settigns
-SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
+SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
+
 # SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY'] #이 줄은 raise KeyError(key) from None KeyError: 'SENDGRID_API_KEY' 오류가 출력된다.
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_HOST_USER = 'apikey'# this is exactly the value 'apikey'
@@ -157,3 +158,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS =True
 
 WELCOME_EMAIL_SENDER = "codebot053@gmail.com"
+
+LOGIN_REDIRECT_URL = '/'
