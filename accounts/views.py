@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.views import LoginView, logout_then_login, LogoutView
-from .forms import SignupForm
+from .forms import SignupForm, ProfileForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login as auth_login
 
@@ -33,3 +33,17 @@ def signup(request):
         'form' : form,
     })
 
+@login_required
+def profile_edit(request):
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "프로필 수정했습니다.")
+            return redirect("accounts:profile_edit")
+    else:
+        form = ProfileForm(instance=request.user)
+    return render(request, "accounts/profile_edit.html",{"form":form
+        
+    })
+    
