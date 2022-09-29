@@ -1,11 +1,25 @@
+from unittest.util import _MAX_LENGTH
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from django.core.mail import send_mail
+from django.core.validators import RegexValidator
 from django.db import models
 from django.template.loader import render_to_string
 
 class User(AbstractUser):
+    # 각 변수에 할당되는 첫번째 값은 DB에 저장되는 값이고 두번째 값은 보여지는 값이다.
+    class GenderChoices(models.TextChoices):
+        MALE = "M", "남자"
+        FEMALE = "F", "여자"
+
+
     bio = models.TextField(blank=True)
+    phone_number = models.CharField(max_length=13,validators=[RegexValidator(r"^010-?[1-9]\d{3}-?\d{4}$")] ,blank=True)
+    # default=GenderChoices.MALE 를 default 로 주게되면 기본값으로 "M"이 할당된다.
+    gender = models.CharField(max_length=4,choices=GenderChoices.choices ,blank=True)
+    # models.ImageField 의 경우도 DB에는 경로를 저장하게 된다. CharField 로 볼 수 있다.
+    profile_image = models.ImageField(blank=True, upload_to="accounts/profile/%Y/%m/%d")
+    
 
     def send_welcome_email(self):
         user_name = self.first_name
