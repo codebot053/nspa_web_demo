@@ -12,9 +12,10 @@ class User(AbstractUser):
         MALE = "M", "남자"
         FEMALE = "F", "여자"
 
-
+    # 소개
     bio = models.TextField(blank=True)
-    phone_number = models.CharField(max_length=13,validators=[RegexValidator(r"^010-?[1-9]\d{3}-?\d{4}$")] ,blank=True)
+    # 정규표현식에서 010 다음에는 1-9 까지의 숫자중 하나 그리고 0-9 까지 3번 반복 
+    phone_number = models.CharField(max_length=13, validators=[RegexValidator(r"^010-?[1-9]\d{3}-?\d{4}$")] ,blank=True)
     # default=GenderChoices.MALE 를 default 로 주게되면 기본값으로 "M"이 할당된다.
     gender = models.CharField(max_length=4,choices=GenderChoices.choices ,blank=True)
     # models.ImageField 의 경우도 DB에는 경로를 저장하게 된다. CharField 로 볼 수 있다.
