@@ -1,9 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth.views import LoginView, logout_then_login, LogoutView
-from .forms import SignupForm, ProfileForm
+from django.contrib.auth.views import( LoginView, logout_then_login,
+     PasswordChangeView as AuthPasswordChangeView)
+from .forms import SignupForm, ProfileForm, PasswordChangeForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login as auth_login
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+
 
 login = LoginView.as_view(template_name="accounts/login_form.html")
 # logout = LogoutView.as_view()
@@ -43,7 +47,21 @@ def profile_edit(request):
             return redirect("accounts:profile_edit")
     else:
         form = ProfileForm(instance=request.user)
-    return render(request, "accounts/profile_edit.html",{"form":form
-        
+    return render(request, "accounts/profile_edit.html",
+    {
+        "form":form
     })
-    
+# @login_required
+# def password_change(request):
+#     pass
+
+class PasswordChangeView(LoginRequiredMixin,AuthPasswordChangeView):
+    success_url= reverse_lazy("accounts:password_change")
+    template_name = 'accounts/password_change_form.html'
+    form_class = PasswordChangeForm
+    # FormView를 통해 form 객채를 인자로 전달 받는다.
+    def form_valid(self, form):
+        messages.success(self.request , "PW를 변경했습니다.")
+        return super().form_valid(form)
+
+password_change = PasswordChangeView.as_view()
