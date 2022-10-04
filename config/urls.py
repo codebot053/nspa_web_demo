@@ -10,6 +10,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', login_required(TemplateView.as_view(template_name='root.html')), name='root'),
     path('accounts/', include('accounts.urls')),
+    path('projects/',include('search_project.urls')),
     path('identicon/image/<path:data>/', pydenticon_image, name='pydenticon_image'),
 ]
 

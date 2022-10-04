@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'django_pydenticon',
     # Local Apps
     'accounts',
+    'search_project',
+    
 ]
 
 MIDDLEWARE = [
