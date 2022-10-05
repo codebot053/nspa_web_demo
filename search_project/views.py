@@ -12,6 +12,7 @@ def project_new(request):
             project = form.save(commit=False)
             project.author = request.user
             project.save()
+            project.custom_tag_set.add(*project.tag_parser())
             messages.success(request, "새 프로젝트를 생성했습니다.")
             return redirect('/') # TODO: get_absolute_url 활용해볼것
     else:
