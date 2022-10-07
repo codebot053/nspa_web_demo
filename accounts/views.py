@@ -7,15 +7,20 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-
+from django.contrib.auth import get_user_model
 
 login = LoginView.as_view(template_name="accounts/login_form.html")
 # logout = LogoutView.as_view()
 def logout(request):
     messages.success(request, "로그아웃 되었습니다.")
     return logout_then_login(request)
-
-
+@login_required
+def profile_view(request, username):
+    username=list(username)
+    username.pop(-1)
+    username = ''.join(username)
+    user_profile = get_user_model().objects.get(username=username)
+    return render(request, "accounts/profile.html",{"user_profile":user_profile})
 
 def signup(request):
     if request.method == 'POST':
@@ -65,3 +70,4 @@ class PasswordChangeView(LoginRequiredMixin,AuthPasswordChangeView):
         return super().form_valid(form)
 
 password_change = PasswordChangeView.as_view()
+
