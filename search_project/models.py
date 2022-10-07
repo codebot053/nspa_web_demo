@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.urls import reverse
 import re
 
 # Create your models here.
@@ -14,10 +15,14 @@ class Project(models.Model):
     content = models.TextField(max_length=500)
     location = models.CharField(max_length=100)
 
+    @property
+    def name(self):
+        return f"{self.author.first_name} {self.author.last_name}"
+
+
     def __str__(self):
         return self.title
     
-
     def tag_parser(self):
         tag_name_list = re.findall(r"#([A-Za-z\dㄱ-힣]+)",self.custom_tag)
         tag_list = list()
@@ -26,10 +31,9 @@ class Project(models.Model):
             tag_list.append(tag)
         return tag_list
 
-
-
-    # def get_absolute_url(self):
-    #     return reverse("model_detail", kwargs={"pk": self.pk}
+    def get_absolute_url(self):
+        return reverse("projects:project_detail", kwargs={"pk": self.pk})
+        #return reverse("projects:project_detail", args=[self.pk])
 
 
 class DevTechnology(models.Model):

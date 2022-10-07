@@ -1,0 +1,40 @@
+{% extends "search_project/layout.html" %}
+
+{% block content%}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="card">
+                <div class="card-header">
+                    <img src="{{user.profile_image_url}}" style="width:24px; height:24px; border-radius:12px;"/>
+                    {{project.name}}
+                    
+                </div>
+                <div class="card-body">
+                    {% if project.title_image %}
+                    <img src="{{project.title_image.url}}" style="width:10%;"/>
+                    {% endif %}
+                </div>
+                <div class="card-footer">
+                    {% for tag in project.custom_tag_set.all %}
+                    <span class="badge badge-dark">#{{ tag.name }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <hr/>
+            
+            <!-- 
+            <p>{{project.content}}</p>
+            <p>{{project.location}}</p>
+            -->
+        </div>
+    </div>
+</div>    
+
+
+    
+
+{% endblock %}

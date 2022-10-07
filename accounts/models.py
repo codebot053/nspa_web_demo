@@ -4,6 +4,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.core.validators import RegexValidator
 from django.db import models
+from django.shortcuts import resolve_url
 from django.template.loader import render_to_string
 
 class User(AbstractUser):
@@ -21,6 +22,13 @@ class User(AbstractUser):
     # models.ImageField 의 경우도 DB에는 경로를 저장하게 된다. CharField 로 볼 수 있다.
     profile_image = models.ImageField(blank=True, upload_to="accounts/profile/%Y/%m/%d")
     
+    @property
+    def profile_image_url(self):
+        if self.profile_image:
+            return self.profile_image.url
+
+        else:
+            return resolve_url("pydenticon_image", self.username)
 
     def send_welcome_email(self):
         user_name = self.first_name
