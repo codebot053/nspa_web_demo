@@ -15,9 +15,7 @@ class Project(models.Model):
     content = models.TextField(max_length=500)
     location = models.CharField(max_length=100)
 
-    @property
-    def name(self):
-        return f"{self.author.first_name} {self.author.last_name}"
+   
 
 
     def __str__(self):

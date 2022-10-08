@@ -4,14 +4,24 @@
     <div class="container">
         <div class="row">
            
-            <div class="col-sm-6 offset-sm-3 mb-3">
-            
-                   {{user_profile.username}}
+            <div class="col-sm-3" style="text-align:center">
+                <img src="{{page_user.profile_image_url}}" class="rounded-circle" style="height:160px; width:160px" />
+                
+            </div>
+            <div class="col-sm-9">
+                {{page_user.username}}
+                <a href="{% url "accounts:profile_edit"%}" class="btn btn-primary">프로필 수정</a>
                     <hr/>
-                   {{user_profile.profile_image_url}}
-                   <hr/>
-                   {{user_profile.gender}}
-
+                    0 projects, 0 followers, 0 following
+                    <hr/>
+                    {{page_user.name}}
+            </div>
+                  
+                    
+                  
+                    
+            </div>
+            <div class="col-sm-12">
             </div>
         </div>
     </div>

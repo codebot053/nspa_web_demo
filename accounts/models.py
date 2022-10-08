@@ -6,6 +6,7 @@ from django.core.validators import RegexValidator
 from django.db import models
 from django.shortcuts import resolve_url
 from django.template.loader import render_to_string
+from django.urls import reverse
 
 class User(AbstractUser):
     # 각 변수에 할당되는 첫번째 값은 DB에 저장되는 값이고 두번째 값은 보여지는 값이다.
@@ -21,7 +22,10 @@ class User(AbstractUser):
     gender = models.CharField(max_length=4,choices=GenderChoices.choices ,blank=True)
     # models.ImageField 의 경우도 DB에는 경로를 저장하게 된다. CharField 로 볼 수 있다.
     profile_image = models.ImageField(blank=True, upload_to="accounts/profile/%Y/%m/%d")
-    
+    @property
+    def name(self):
+        return f"{self.first_name} {self.last_name}"
+
     @property
     def profile_image_url(self):
         if self.profile_image:
@@ -39,3 +43,5 @@ class User(AbstractUser):
             })
         sender_email = settings.WELCOME_EMAIL_SENDER
         send_mail(subject, content, sender_email, [self.email], fail_silently=False)
+    
+    

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from django.contrib.auth.views import( LoginView, logout_then_login,
      PasswordChangeView as AuthPasswordChangeView)
@@ -14,13 +14,23 @@ login = LoginView.as_view(template_name="accounts/login_form.html")
 def logout(request):
     messages.success(request, "로그아웃 되었습니다.")
     return logout_then_login(request)
-@login_required
+
+
+# @login_required
 def profile_view(request, username):
-    username=list(username)
-    username.pop(-1)
-    username = ''.join(username)
-    user_profile = get_user_model().objects.get(username=username)
-    return render(request, "accounts/profile.html",{"user_profile":user_profile})
+    # username=list(username)
+    # username.pop(-1)
+    # username = ''.join(username)
+    # user_profile = get_user_model().objects.get(username=username)
+    # return render(request, "accounts/profile.html",{"user_profile":user_profile})
+
+    page_user = get_object_or_404(get_user_model(), username=username, is_active=True)
+    return render(request, "accounts/profile.html",{
+        "page_user":page_user,
+    })
+
+
+
 
 def signup(request):
     if request.method == 'POST':
